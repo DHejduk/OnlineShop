@@ -3,6 +3,7 @@ package com.onlineshop.project.repository;
 
 import com.onlineshop.project.model.entity.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,5 +13,8 @@ public interface ItemRepository extends JpaRepository<Item,Long> {
 
     Item findByItemId(Long id);
     Item findByItemName(String name);
+
+
+    Item findFirstByOrderByItemIdDesc();
 
 }

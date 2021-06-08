@@ -1,24 +1,24 @@
 package com.onlineshop.project.model.dto;
 
-import com.onlineshop.project.security.ValidEmail;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 @Data
-public class UserRegistrationDto {
+public class ItemDto {
     @NotNull
     @NotEmpty
-    private String username;
-    @NotNull
-    @NotEmpty @ValidEmail
-    private String email;
+    private Long itemId;
     @NotNull
     @NotEmpty
-    private String password;
+    private String itemName;
+    @NotNull
+    @NotEmpty
+    private BigDecimal price;
 
+    private String description;
 
-
-
+    private String imgUrl;
 }

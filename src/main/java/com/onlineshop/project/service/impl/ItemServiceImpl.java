@@ -33,6 +33,11 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    public Item findLastAddedItem() {
+        return itemRepository.findFirstByOrderByItemIdDesc();
+    }
+
+    @Override
     public void update(Item item) {
 
     }

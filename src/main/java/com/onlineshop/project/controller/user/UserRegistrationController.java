@@ -3,6 +3,7 @@ package com.onlineshop.project.controller.user;
 
 import com.onlineshop.project.model.dto.UserRegistrationDto;
 import com.onlineshop.project.model.entity.User;
+import com.onlineshop.project.service.impl.PasswordEncoder;
 import com.onlineshop.project.service.impl.UserServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
+import java.util.List;
+
 
 @Controller
 @AllArgsConstructor
@@ -20,7 +24,7 @@ public class UserRegistrationController{
 
     @Autowired
     private final UserServiceImpl userService;
-    private final BCryptPasswordEncoder passwordEncoder;
+private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/sign-up")
     public String showRegistrationForm(Model model) {
@@ -29,11 +33,15 @@ public class UserRegistrationController{
     }
 
     @PostMapping("/sign-up")
-    public String register(@ModelAttribute("userSignUp")UserRegistrationDto userRegistrationDto){
+    public String processRegistrationForm(@ModelAttribute("userSignUp") @Valid UserRegistrationDto userRegistrationDto){
         User user = new User();
+        User byEmail = userService.findByEmail(userRegistrationDto.getEmail());
+        if (byEmail != null){
+            return "redirect:/sign-up";
+        }
         user.setUserName(userRegistrationDto.getUsername());
         user.setEmail(userRegistrationDto.getEmail());
-        user.setPassword(passwordEncoder.encode(userRegistrationDto.getPassword()));
+        user.setPassword(passwordEncoder.encoder().encode(userRegistrationDto.getPassword()));
         userService.save(user);
     return "redirect:/login";
     }

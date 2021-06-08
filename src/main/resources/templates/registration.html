@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title></title>
+    <title>Sign Up</title>
     <meta name="description" content="">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
@@ -15,11 +16,17 @@
         <input id="username" name="username" type="text" placeholder="Username"/>
         <input id="email" name="email" type="email" placeholder="Email"/>
         <input id="password" name="password" type="password" placeholder="Password"/>
-        <!--            <input type="repassword" placeholder="Repeat password"/>-->
+        <p></p>
         <button>Sign Up</button>
+        <p>OR</p>
+        <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/login}" href="#">
+            <button type="button">
+                SIGN IN
+            </button>
+        </a>
     </form>
 </div>
 
-<script src="script.js"></script>
+<script src="/js/script.js"></script>
 </body>
 </html>

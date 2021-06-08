@@ -7,4 +7,5 @@ public interface ItemService {
     void save(Item item);
     Item findByItemId(Long id);
     Item findByItemName(String name);
+    Item findLastAddedItem();
 }

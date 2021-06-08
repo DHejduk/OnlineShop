@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -26,6 +28,11 @@ public class Item {
     @NotNull
     private BigDecimal price;
 
-    @ManyToMany(mappedBy = "sellingItems")
-    private List<User> users;
+    @NotNull
+    private String description;
+
+    private String imgUrl;
+//
+//    @ManyToOne(mappedBy = "sellingItems")
+//    private List<User> users;
 }

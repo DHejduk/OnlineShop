@@ -1,14 +1,16 @@
 package com.onlineshop.project.service.impl;
 
 import com.onlineshop.project.model.entity.User;
-import com.onlineshop.project.repository.RoleRepository;
 import com.onlineshop.project.repository.UserRepository;
 import com.onlineshop.project.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service @Transactional
 @AllArgsConstructor
@@ -16,9 +18,7 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private final UserRepository userRepository;
-    private final RoleRepository repository;
-    private final BCryptPasswordEncoder passwordEncoder;
-
+    private final PasswordEncoder passwordEncoder;
     @Override
     public void save(User user) {
         userRepository.save(user);
@@ -29,6 +29,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(username);
     }
 
+
     @Override
     public User findByUserNameAndPassword(String username, String password) {
         return userRepository.findByUserNameAndPassword(username,password);
@@ -36,10 +37,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String encodePassword(String password) {
-        return passwordEncoder.encode(password);
+        return passwordEncoder.encoder().encode(password);
     }
 
-    public boolean isCorrect(String encodedPassword, String rawPassword){
-        return passwordEncoder.matches(rawPassword,encodedPassword);
+    public boolean matches(String encode, String given){
+        return encode.equals(given);
+//        return passwordEncoder.encoder().matches(encode,given);
     }
+
+
 }
