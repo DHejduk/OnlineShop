@@ -15,7 +15,12 @@
         <h1>Sign In To Your Account</h1>
         <input  id="email" name="email" type="email" placeholder="Email"/>
         <input id="password" name="password" type="password" placeholder="Password"/>
-        <!--            <input type="repassword" placeholder="Repeat password"/>-->
+        <p th:if="${param.error}">
+            Invalid username and password.
+        </p>
+        <p th:if="${param.logout}">
+            You have been logged out.
+        </p>
         <button type="submit">Sign In</button>
         <p> OR </p>
         <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/sign-up}" href="#">

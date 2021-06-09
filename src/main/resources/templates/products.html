@@ -8,14 +8,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
-          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/bttn.css">
     <title>Document</title>
 </head>
 <body>
-
-
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
@@ -34,36 +30,52 @@
                     <a class="nav-link" th:href="@{/shop}" href="#"><button>BUY ITEM</button></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" th:href="@{/shop/view-my-items}" href="#"><button >MY ITEMS</button></a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" th:href="@{/}" href="#"><button >cos</button></a>
+                    <a class="nav-link" th:href="@{/shop/add-product}" href="#"><button>SELL ITEM</button></a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/logout}" href="#"><button>LOGOUT</button></a>
                 </li>
             </ul>
-
         </div>
     </div>
 </nav>
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-sm-5 d-flex justify-content-center">
-            <img class="mt-5" height="300px" width="300px" th:src="@{/img/logo.png}" src="../static/images/logo.png"
-               alt=""/>
+<div class="container-fluid">
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Product Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Description</th>
+            <th scope="col">Preview</th>
+            <th scope="col">Delete</th>
+            <th scope="col">Update</th>
+        </tr>
+        </thead>
+        <tbody>
 
-        </div>
-        <div class="col-sm-7 mt-5">
-            <h2 th:text="${product.getItemName()}"></h2>
-<!--            <p th:text="${product.category.name}"></p>-->
-            <h2>
-                Price: <span th:text="${product.getPrice()}"> PLN</span>
-            </h2>
-            <p th:text="${product.getDescription()}"></p>
-<!--            <a href="" th:href="@{/addToCart/{id}(id = ${product.id})}" class="btn btn-primary">Add to cart</a>-->
-        </div>
-    </div>
+        <tr th:each="product, iStat : ${products}">
+            <th scope="row" th:text="${iStat.index + 1}">1</th>
+            <td th:text="${product.getItemName()}"></td>
+            <td th:text="${product.getPrice()}"></td>
+            <td th:text="${product.getDescription()}"></td>
+            <td>
+                <img class="mt-5" height="100px" width="100px" th:src="@{/img/logo.png}" src="../static/images/logo.png"
+                     th:alt="${product.getItemName()}"/>
+            <td>
+                <a href="" th:href="@{/shop/item/delete/{id}(id=${product.getItemId()})}">
+                    <button class="delete">Delete</button>
+                </a>
+            </td>
+            <td>
+                <a href="" th:href="@{/shop/item/update/{id}(id=${product.getItemId()})}">
+                    <button class="update">Update</button>
+                </a>
+            </td>
+            <!--            /admin/product/update/{id}(id=${product.id})-->
+        </tr>
+        </tbody>
+    </table>
 </div>
 
 

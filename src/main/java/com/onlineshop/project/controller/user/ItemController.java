@@ -9,13 +9,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-@Controller @AllArgsConstructor
+import java.util.List;
+
+@Controller
+@AllArgsConstructor
 public class ItemController {
 
     @Autowired
     private final ItemServiceImpl itemService;
+
     @GetMapping("/shop/add-product")
     public String addNewItem(Model model) {
         model.addAttribute("productDTO", new ItemDto());
@@ -30,17 +35,49 @@ public class ItemController {
         item.setDescription(itemDto.getDescription());
         item.setImgUrl(itemDto.getImgUrl());
         itemService.save(item);
-        return "redirect:/shop/view-product";
-
+        return "redirect:/shop/view-product/added";
     }
 
 
-    @GetMapping("/shop/view-product")
+    @GetMapping("/shop/view-product/added")
     public String showItem(Model model) {
         Item lastAddedItem = itemService.findLastAddedItem();
         System.out.println(lastAddedItem.toString());
-        model.addAttribute("product",lastAddedItem);
+        model.addAttribute("product", lastAddedItem);
         return "viewProduct";
+    }
+
+    @GetMapping("/shop/view-my-items")
+    public String showUserItems(Model model) {
+        List<Item> products = itemService.findAllSellingItems();
+        model.addAttribute("products", products);
+        return "products";
+    }
+
+    @GetMapping("/shop/item/update/{id}")
+    public String showItemUpdateForm(@PathVariable("id") String id, Model model) {
+        model.addAttribute("itemId", id);
+        Item byItemId = itemService.findByItemId(Long.valueOf(id));
+        System.out.println(byItemId);
+        model.addAttribute("itemDTO", byItemId);
+        return "updateItem";
+    }
+
+    @PostMapping("/shop/item/update/{id}")
+    public String updateItem(@PathVariable("id") String id,
+                             @ModelAttribute("itemDTO") ItemDto itemDto) {
+        Item item = new Item();
+        item.setItemId(Long.valueOf(id));
+        item.setItemName(itemDto.getItemName());
+        item.setPrice(itemDto.getPrice());
+        item.setDescription(itemDto.getDescription());
+        itemService.updateItem(item);
+        return "redirect:/shop/view-my-items";
+    }
+    @GetMapping("/shop/item/delete/{id}")
+    public String deleteItem(@PathVariable("id") String id){
+        itemService.deleteItem(Long.valueOf(id));
+        return "redirect:/shop/view-my-items";
     }
 
 }

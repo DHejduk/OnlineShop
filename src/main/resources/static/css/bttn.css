@@ -22,3 +22,15 @@ button.ghost {
     background-color: transparent;
     border-color: #FFFFFF;
 }
+
+.delete{
+    border: 1px solid #fa0202;
+    background-color: #fa0202;
+    color: #FFFFFF;
+}
+
+.update{
+    border: 1px solid #fa8a02;
+    background-color: #fa8a02;
+    color: #000000;
+}

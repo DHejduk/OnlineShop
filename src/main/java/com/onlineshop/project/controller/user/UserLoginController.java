@@ -29,7 +29,7 @@ public class UserLoginController {
     }
 
     @PostMapping("/login")
-    public String processLogin(@ModelAttribute("userLogin") UserLoginDto userLoginDto) {
+    public String processLogin(@ModelAttribute("userLogin") UserLoginDto userLoginDto, Model model) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(userLoginDto.getEmail());
         if (userDetails == null){
             return "redirect:/login?msg=brakUzytkownika";
@@ -37,7 +37,6 @@ public class UserLoginController {
         if (!userService.matches(userDetails.getPassword(), userLoginDto.getPassword())) {
             return "redirect:/login?msg=niewlasciwehaslo";
         }
-
         return "redirect:/shop";
 
     }

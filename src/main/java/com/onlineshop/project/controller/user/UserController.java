@@ -15,9 +15,6 @@ public class UserController {
 
     private final MyUserDetailsService userDetailsService;
 
-    @GetMapping("/shop")
-    public String showShop() {
-        return "shop";
-    }
+
 
 }

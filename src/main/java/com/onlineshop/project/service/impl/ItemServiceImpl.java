@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 @AllArgsConstructor
@@ -38,7 +40,18 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public void update(Item item) {
-
+    public List<Item> findAllSellingItems() {
+        return itemRepository.findAll();
     }
+
+    @Override
+    public void deleteItem(Long id) {
+        itemRepository.deleteById(id);
+    }
+
+    @Override
+    public void updateItem(Item item) {
+        itemRepository.save(item);
+    }
+
 }

@@ -32,7 +32,7 @@ public class Item {
     private String description;
 
     private String imgUrl;
-//
-//    @ManyToOne(mappedBy = "sellingItems")
-//    private List<User> users;
+
+    @ManyToOne()
+    private User user;
 }
