@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Controller
@@ -28,10 +29,10 @@ public class ItemController {
     }
 
     @PostMapping("/shop/add-product")
-    public String processLogin(@ModelAttribute("productDTO") ItemDto itemDto, Model model) {
+    public String processLogin(@ModelAttribute("productDTO") ItemDto itemDto) {
         Item item = new Item();
         item.setItemName(itemDto.getItemName());
-        item.setPrice(itemDto.getPrice());
+        item.setPrice(new BigDecimal(itemDto.getPrice()));
         item.setDescription(itemDto.getDescription());
         item.setImgUrl(itemDto.getImgUrl());
         itemService.save(item);
@@ -49,7 +50,7 @@ public class ItemController {
 
     @GetMapping("/shop/view-my-items")
     public String showUserItems(Model model) {
-        List<Item> products = itemService.findAllSellingItems();
+        List<Item> products = itemService.findItemByUserId(1L);
         model.addAttribute("products", products);
         return "products";
     }
@@ -69,7 +70,7 @@ public class ItemController {
         Item item = new Item();
         item.setItemId(Long.valueOf(id));
         item.setItemName(itemDto.getItemName());
-        item.setPrice(itemDto.getPrice());
+        item.setPrice(new BigDecimal(itemDto.getPrice()));
         item.setDescription(itemDto.getDescription());
         itemService.updateItem(item);
         return "redirect:/shop/view-my-items";
@@ -78,6 +79,19 @@ public class ItemController {
     public String deleteItem(@PathVariable("id") String id){
         itemService.deleteItem(Long.valueOf(id));
         return "redirect:/shop/view-my-items";
+    }
+
+    @GetMapping("/shop/item/checkout/{id}")
+    public String checkout(@PathVariable("id") String id, Model model){
+        Item byItemId = itemService.findByItemId(Long.valueOf(id));
+        model.addAttribute("item", byItemId);
+        return "checkout";
+    }
+
+    @PostMapping("/shop/item/buy/{id}")
+    public String buyItem(@PathVariable("id") String id){
+        itemService.deleteItem(Long.valueOf(id));
+        return "redirect:/shop";
     }
 
 }

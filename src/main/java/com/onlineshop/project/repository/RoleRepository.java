@@ -3,5 +3,7 @@ package com.onlineshop.project.repository;
 import com.onlineshop.project.model.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface RoleRepository extends JpaRepository<Role, Long> {
+public interface RoleRepository extends JpaRepository<Role, Integer> {
+
+    Role findByName(String name);
 }

@@ -24,7 +24,7 @@ public class UserRegistrationController{
 
     @Autowired
     private final UserServiceImpl userService;
-private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/sign-up")
     public String showRegistrationForm(Model model) {

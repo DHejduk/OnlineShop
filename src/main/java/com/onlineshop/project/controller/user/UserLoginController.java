@@ -30,12 +30,13 @@ public class UserLoginController {
 
     @PostMapping("/login")
     public String processLogin(@ModelAttribute("userLogin") UserLoginDto userLoginDto, Model model) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(userLoginDto.getEmail());
+//        UserDetails userDetails = userDetailsService.loadUserByUsername(userLoginDto.getEmail());
+        User userDetails = userService.findByEmail(userLoginDto.getEmail());
         if (userDetails == null){
-            return "redirect:/login?msg=brakUzytkownika";
+            return "redirect:/login?error";
         }
         if (!userService.matches(userDetails.getPassword(), userLoginDto.getPassword())) {
-            return "redirect:/login?msg=niewlasciwehaslo";
+            return "redirect:/login?error";
         }
         return "redirect:/shop";
 

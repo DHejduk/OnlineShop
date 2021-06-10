@@ -42,8 +42,8 @@ public class UserServiceImpl implements UserService {
 
 
     public boolean matches(String encode, String given){
-        return encode.equals(given);
-//        return passwordEncoder.encoder().matches(encode,given);
+//        return encode.equals(given);
+        return passwordEncoder.encoder().matches(encode,given);
     }
 
 

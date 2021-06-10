@@ -16,7 +16,7 @@ public class ItemDto {
     private String itemName;
     @NotNull
     @NotEmpty
-    private BigDecimal price;
+    private String price;
 
     private String description;
 

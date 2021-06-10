@@ -54,4 +54,9 @@ public class ItemServiceImpl implements ItemService {
         itemRepository.save(item);
     }
 
+
+    public List<Item> findItemByUserId(Long id) {
+        return itemRepository.findItemsByUserId(id);
+    }
+
 }

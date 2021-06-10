@@ -12,5 +12,6 @@ public interface ItemService {
     List<Item> findAllSellingItems();
     void deleteItem(Long id);
     void updateItem(Item item);
+    List<Item> findItemByUserId(Long id);
 
 }

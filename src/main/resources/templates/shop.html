@@ -68,7 +68,8 @@
                             <h5 class="card-title" th:text="${product.getItemName()}"></h5>
                             <h4><span th:text="${product.getPrice()}"></span> PLN</h4>
                             <p th:text="${product.description}"></p>
-                            <a href="#" th:href="@{/shop/viewproduct/{id}(id=${product.getItemId()})}" class="btn btn-primary">View Product</a>
+                            <a href="#" th:href="@{/shop/viewproduct/{id}(id=${product.getItemId()})}"><button>View Product</button></a>
+                            <a href="#" th:href="@{/shop/item/checkout/{id}(id=${product.getItemId()})}"><button>Buy</button></a>
                         </div>
                     </div>
                 </div>

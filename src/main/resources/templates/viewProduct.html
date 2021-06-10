@@ -61,7 +61,7 @@
                 Price: <span th:text="${product.getPrice()}"> PLN</span>
             </h2>
             <p th:text="${product.getDescription()}"></p>
-<!--            <a href="" th:href="@{/addToCart/{id}(id = ${product.id})}" class="btn btn-primary">Add to cart</a>-->
+            <a href="#" th:href="@{/shop/item/checkout/{id}(id=${product.getItemId()})}"><button>Buy</button></a>
         </div>
     </div>
 </div>
