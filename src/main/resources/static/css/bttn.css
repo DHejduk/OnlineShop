@@ -1,0 +1,36 @@
+button {
+    border-radius: 20px;
+    border: 1px solid #052ae7;
+    background-color: #052ae7;
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: transform 80ms ease-in;
+}
+button:active {
+    transform: scale(0.95);
+}
+
+button:focus {
+    outline: none;
+}
+
+button.ghost {
+    background-color: transparent;
+    border-color: #FFFFFF;
+}
+
+.delete{
+    border: 1px solid #fa0202;
+    background-color: #fa0202;
+    color: #FFFFFF;
+}
+
+.update{
+    border: 1px solid #fa8a02;
+    background-color: #fa8a02;
+    color: #000000;
+}
