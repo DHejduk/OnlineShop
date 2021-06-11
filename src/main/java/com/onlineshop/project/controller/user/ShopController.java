@@ -20,6 +20,7 @@ import java.util.List;
 public class ShopController {
     @Autowired
     private final ItemServiceImpl itemService;
+    @Autowired
     private final UserServiceImpl userService;
 
     @GetMapping("/shop")

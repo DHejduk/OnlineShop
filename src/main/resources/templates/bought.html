@@ -30,7 +30,7 @@
                     <a class="nav-link" th:href="@{/shop/sold}" href="#"><button>ITEMS SOLD</button></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" th:href="@{/shop/bought}" href="#"><button>ITEM BOUGHT</button></a>
+                    <a class="nav-link" th:href="@{/shop/view-my-items}" href="#"><button>MY ITEMS </button></a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" th:href="@{/shop}" href="#"><button>BUY ITEM</button></a>
@@ -54,30 +54,18 @@
             <th scope="col">Price</th>
             <th scope="col">Description</th>
             <th scope="col">Preview</th>
-            <th scope="col">Delete</th>
-            <th scope="col">Update</th>
+            <th scope="col">Vendor name</th>
         </tr>
         </thead>
         <tbody>
 
-        <tr th:each="product, iStat : ${products}">
+        <tr th:each="product, iStat : ${bought}">
             <th scope="row" th:text="${iStat.index + 1}">1</th>
-            <td th:text="${product.getItemName()}"></td>
-            <td th:text="${product.getPrice()}"></td>
-            <td th:text="${product.getDescription()}"></td>
-            <td>
-                <img class="mt-5" height="100px" width="100px" th:src="@{/img/logo.png}" src="../static/images/logo.png"
-                     th:alt="${product.getItemName()}"/>
-            <td>
-                <a href="" th:href="@{/shop/item/delete/{id}(id=${product.getItemId()})}">
-                    <button class="delete">Delete</button>
-                </a>
-            </td>
-            <td>
-                <a href="" th:href="@{/shop/item/update/{id}(id=${product.getItemId()})}">
-                    <button class="update">Update</button>
-                </a>
-            </td>
+            <td th:text="${product.getItem().getItemName()}"></td>
+            <td th:text="${product.getItem().getPrice()}"></td>
+            <td th:text="${product.getItem().getDescription()}"></td>
+            <td><img class="mt-5" height="100px" width="100px" th:src="@{/img/logo.png}" src="../static/images/logo.png" th:alt="${product.getItem().getItemName()}"/></td>
+            <th th:text="${product.getVendor().getUserName()}"></th>
             <!--            /admin/product/update/{id}(id=${product.id})-->
         </tr>
         </tbody>

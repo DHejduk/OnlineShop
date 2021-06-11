@@ -28,6 +28,7 @@ public class UserRegistrationController{
 
     @Autowired
     private final UserServiceImpl userService;
+    @Autowired
     private final RoleServiceImpl roleService;
 
     private final PasswordEncoder passwordEncoder;
