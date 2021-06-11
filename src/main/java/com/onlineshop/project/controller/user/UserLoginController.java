@@ -5,7 +5,6 @@ import com.onlineshop.project.service.impl.MyUserDetailsService;
 import com.onlineshop.project.service.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +18,7 @@ public class UserLoginController {
 
     @Autowired
     private final UserServiceImpl userService;
+    @Autowired
     private final MyUserDetailsService userDetailsService;
 
 
@@ -33,11 +33,6 @@ public class UserLoginController {
     public String processLogin(@ModelAttribute("userLogin") UserLoginDto userLoginDto, Model model) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(userLoginDto.getEmail());
         String password = userLoginDto.getPassword();
-        System.out.println(password);
-        System.out.println(userDetails.getPassword());
-//        User userDetails = userService.findByEmail(userLoginDto.getEmail());
-
-
         if (userDetails == null){
             return "redirect:/login?error";
         }

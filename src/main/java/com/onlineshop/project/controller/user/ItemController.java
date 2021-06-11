@@ -23,6 +23,7 @@ public class ItemController {
 
     @Autowired
     private final ItemServiceImpl itemService;
+    @Autowired
     private final UserServiceImpl userService;
     @GetMapping("/shop/add-product")
     public String addNewItem(Model model) {
@@ -89,17 +90,6 @@ public class ItemController {
         return "redirect:/shop/view-my-items";
     }
 
-    @GetMapping("/shop/item/checkout/{id}")
-    public String checkout(@PathVariable("id") String id, Model model){
-        Item byItemId = itemService.findByItemId(Long.valueOf(id));
-        model.addAttribute("item", byItemId);
-        return "checkout";
-    }
 
-    @PostMapping("/shop/item/buy/{id}")
-    public String buyItem(@PathVariable("id") String id){
-        itemService.deleteItem(Long.valueOf(id));
-        return "redirect:/shop";
-    }
 
 }
