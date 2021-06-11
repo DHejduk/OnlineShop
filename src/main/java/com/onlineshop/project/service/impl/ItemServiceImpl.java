@@ -59,4 +59,11 @@ public class ItemServiceImpl implements ItemService {
         return itemRepository.findItemsByUserId(id);
     }
 
+    @Override
+    public List<Item> findItemWhereUserIdNotIn(Long id) {
+        return itemRepository.findItemsNotContainingUserId(id);
+    }
+
+
+
 }

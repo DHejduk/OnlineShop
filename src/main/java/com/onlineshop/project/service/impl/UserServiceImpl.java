@@ -2,10 +2,13 @@ package com.onlineshop.project.service.impl;
 
 import com.onlineshop.project.model.entity.User;
 import com.onlineshop.project.repository.UserRepository;
+import com.onlineshop.project.security.SecurityConfig;
 import com.onlineshop.project.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +22,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+
     @Override
     public void save(User user) {
         userRepository.save(user);
@@ -41,10 +45,20 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public boolean matches(String encode, String given){
-//        return encode.equals(given);
-        return passwordEncoder.encoder().matches(encode,given);
+    public boolean passwordMatches( String given,String encoded){
+//        return securityConfig.bCryptPasswordEncoder().matches(given,encoded);
+        return passwordEncoder.encoder().matches(given, encoded);
     }
 
+    public User getUser(){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();        String username;
+        if (principal instanceof UserDetails){
+            username = ((UserDetails)principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+        return  this.findByEmail(username);
+
+    }
 
 }
