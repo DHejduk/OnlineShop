@@ -13,5 +13,8 @@ public interface ItemService {
     void deleteItem(Long id);
     void updateItem(Item item);
     List<Item> findItemByUserId(Long id);
+    List<Item> findItemWhereUserIdNotIn(Long id);
+
+
 
 }

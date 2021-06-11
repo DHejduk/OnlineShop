@@ -2,7 +2,9 @@ package com.onlineshop.project.controller.user;
 
 import com.onlineshop.project.model.dto.ItemDto;
 import com.onlineshop.project.model.entity.Item;
+import com.onlineshop.project.model.entity.User;
 import com.onlineshop.project.service.impl.ItemServiceImpl;
+import com.onlineshop.project.service.impl.UserServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +23,7 @@ public class ItemController {
 
     @Autowired
     private final ItemServiceImpl itemService;
-
+    private final UserServiceImpl userService;
     @GetMapping("/shop/add-product")
     public String addNewItem(Model model) {
         model.addAttribute("productDTO", new ItemDto());
@@ -30,27 +32,31 @@ public class ItemController {
 
     @PostMapping("/shop/add-product")
     public String processLogin(@ModelAttribute("productDTO") ItemDto itemDto) {
+        User byEmail = userService.getUser();
+
         Item item = new Item();
         item.setItemName(itemDto.getItemName());
         item.setPrice(new BigDecimal(itemDto.getPrice()));
         item.setDescription(itemDto.getDescription());
         item.setImgUrl(itemDto.getImgUrl());
+        item.setUser(byEmail);
         itemService.save(item);
-        return "redirect:/shop/view-product/added";
+        return "redirect:/shop/view-my-items";
     }
 
 
-    @GetMapping("/shop/view-product/added")
-    public String showItem(Model model) {
-        Item lastAddedItem = itemService.findLastAddedItem();
-        System.out.println(lastAddedItem.toString());
-        model.addAttribute("product", lastAddedItem);
-        return "viewProduct";
-    }
+//    @GetMapping("/shop/view-product/added")
+//    public String showItem(Model model) {
+//        Item lastAddedItem = itemService.findLastAddedItem();
+//        System.out.println(lastAddedItem.toString());
+//        model.addAttribute("product", lastAddedItem);
+//        return "viewProduct";
+//    }
 
     @GetMapping("/shop/view-my-items")
     public String showUserItems(Model model) {
-        List<Item> products = itemService.findItemByUserId(1L);
+        User byEmail = userService.getUser();
+        List<Item> products = itemService.findItemByUserId(byEmail.getUserId());
         model.addAttribute("products", products);
         return "products";
     }
@@ -67,11 +73,13 @@ public class ItemController {
     @PostMapping("/shop/item/update/{id}")
     public String updateItem(@PathVariable("id") String id,
                              @ModelAttribute("itemDTO") ItemDto itemDto) {
+        User byEmail = userService.getUser();
         Item item = new Item();
         item.setItemId(Long.valueOf(id));
         item.setItemName(itemDto.getItemName());
         item.setPrice(new BigDecimal(itemDto.getPrice()));
         item.setDescription(itemDto.getDescription());
+        item.setUser(byEmail);
         itemService.updateItem(item);
         return "redirect:/shop/view-my-items";
     }
