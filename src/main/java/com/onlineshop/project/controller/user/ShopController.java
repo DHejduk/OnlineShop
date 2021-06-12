@@ -33,7 +33,7 @@ public class ShopController {
         }
         User byEmail = userService.findByEmail(username);
 
-        List<Item> products = itemService.findItemWhereUserIdNotIn(byEmail.getUserId());
+        List<Item> products = itemService.findItemWhereUserIdNotIn(byEmail.getUserId(), "SOLD");
         model.addAttribute("products", products);
         return "shop";
     }

@@ -17,10 +17,10 @@ public interface ItemRepository extends JpaRepository<Item,Long> {
     Item findByItemName(String name);
     Item findFirstByOrderByItemIdDesc();
 
-    @Query("SELECT i FROM Item i where i.user.userId = ?1")
-    List<Item> findItemsByUserId(Long id);
+    @Query("SELECT i FROM Item i where i.user.userId = ?1 and  i.status not like ?2")
+    List<Item> findItemsByUserId(Long id, String status);
 
-    @Query("SELECT i FROM Item i where i.user.userId not like ?1")
-    List<Item> findItemsNotContainingUserId(Long id);
+    @Query("SELECT i FROM Item i where i.user.userId not like ?1 and  i.status not like ?2")
+    List<Item> findItemsNotContainingUserId(Long id, String status);
 
 }

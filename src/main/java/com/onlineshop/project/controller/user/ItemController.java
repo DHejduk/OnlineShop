@@ -23,8 +23,10 @@ public class ItemController {
 
     @Autowired
     private final ItemServiceImpl itemService;
+
     @Autowired
     private final UserServiceImpl userService;
+
     @GetMapping("/shop/add-product")
     public String addNewItem(Model model) {
         model.addAttribute("productDTO", new ItemDto());
@@ -32,7 +34,7 @@ public class ItemController {
     }
 
     @PostMapping("/shop/add-product")
-    public String processLogin(@ModelAttribute("productDTO") ItemDto itemDto) {
+    public String processAddForm(@ModelAttribute("productDTO") ItemDto itemDto) {
         User byEmail = userService.getUser();
 
         Item item = new Item();
@@ -41,23 +43,18 @@ public class ItemController {
         item.setDescription(itemDto.getDescription());
         item.setImgUrl(itemDto.getImgUrl());
         item.setUser(byEmail);
+        item.setStatus("OK");
+
         itemService.save(item);
         return "redirect:/shop/view-my-items";
     }
 
 
-//    @GetMapping("/shop/view-product/added")
-//    public String showItem(Model model) {
-//        Item lastAddedItem = itemService.findLastAddedItem();
-//        System.out.println(lastAddedItem.toString());
-//        model.addAttribute("product", lastAddedItem);
-//        return "viewProduct";
-//    }
 
     @GetMapping("/shop/view-my-items")
     public String showUserItems(Model model) {
         User byEmail = userService.getUser();
-        List<Item> products = itemService.findItemByUserId(byEmail.getUserId());
+        List<Item> products = itemService.findItemByUserId(byEmail.getUserId(), "SOLD");
         model.addAttribute("products", products);
         return "products";
     }
@@ -81,6 +78,7 @@ public class ItemController {
         item.setPrice(new BigDecimal(itemDto.getPrice()));
         item.setDescription(itemDto.getDescription());
         item.setUser(byEmail);
+        item.setStatus("OK");
         itemService.updateItem(item);
         return "redirect:/shop/view-my-items";
     }

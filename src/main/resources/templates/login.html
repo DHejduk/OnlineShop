@@ -14,7 +14,7 @@
     <form action="/login" method="post" modelAttribute="userLogin">
         <h1>Sign In To Your Account</h1>
         <input  id="email" name="email" type="email" placeholder="Email"/>
-        <input id="password" name="password" type="password" placeholder="Password"/>
+        <input  id="password" name="password" th:type="password" placeholder="Password"/>
         <p th:if="${param.error}">
             Invalid username and password.
         </p>

@@ -30,17 +30,14 @@ public class UserLoginController {
     }
 
     @PostMapping("/login")
-    public String processLogin(@ModelAttribute("userLogin") UserLoginDto userLoginDto, Model model) {
+    public String processLogin(@ModelAttribute("userLogin") UserLoginDto userLoginDto) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(userLoginDto.getEmail());
-        String password = userLoginDto.getPassword();
         if (userDetails == null){
             return "redirect:/login?error";
         }
-        if (!userService.passwordMatches(password,userDetails.getPassword())) {
+        if (!userService.passwordMatches(userLoginDto.getPassword(),userDetails.getPassword())) {
             return "redirect:/login?error";
         }
-        password = null;
-        userLoginDto.setPassword(null);
         return "redirect:/shop";
 
     }

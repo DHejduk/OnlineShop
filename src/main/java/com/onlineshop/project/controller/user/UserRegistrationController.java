@@ -44,7 +44,7 @@ public class UserRegistrationController{
         User user = new User();
         User byEmail = userService.findByEmail(userRegistrationDto.getEmail());
         if (byEmail != null){
-            return "redirect:/sign-up";
+            return "redirect:/sign-up?error";
         }
         user.setUserName(userRegistrationDto.getUsername());
         user.setEmail(userRegistrationDto.getEmail());

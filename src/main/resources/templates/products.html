@@ -68,6 +68,7 @@
             <td>
                 <img class="mt-5" height="100px" width="100px" th:src="@{/img/logo.png}" src="../static/images/logo.png"
                      th:alt="${product.getItemName()}"/>
+            </td>
             <td>
                 <a href="" th:href="@{/shop/item/delete/{id}(id=${product.getItemId()})}">
                     <button class="delete">Delete</button>
