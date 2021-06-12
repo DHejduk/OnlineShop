@@ -2,8 +2,6 @@ package com.onlineshop.project.controller.user;
 
 import com.onlineshop.project.model.entity.Item;
 import com.onlineshop.project.model.entity.Transaction;
-import com.onlineshop.project.model.entity.User;
-import com.onlineshop.project.service.TransactionService;
 import com.onlineshop.project.service.impl.ItemServiceImpl;
 import com.onlineshop.project.service.impl.TransactionServiceImpl;
 import com.onlineshop.project.service.impl.UserServiceImpl;
@@ -36,12 +34,12 @@ public class TransactionController {
     @PostMapping("/shop/item/buy/{id}")
     public String buyItem(@PathVariable("id") String id){
         Item byItemId = itemService.findByItemId(Long.valueOf(id));
+        byItemId.setStatus("SOLD");
         Transaction transaction = new Transaction();
         transaction.setItem(byItemId);
         transaction.setBuyer(userService.getUser());
         transaction.setVendor(byItemId.getUser());
         transactionService.save(transaction);
-        itemService.deleteItem(Long.valueOf(id));
         return "redirect:/shop";
     }
 

@@ -33,6 +33,8 @@ public class Item {
     @NotNull
     private String description;
 
+    private String status;
+
     private String imgUrl;
 
     @OneToOne()

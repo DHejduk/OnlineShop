@@ -16,7 +16,9 @@
         <input id="username" name="username" type="text" placeholder="Username"/>
         <input id="email" name="email" type="email" placeholder="Email"/>
         <input id="password" name="password" type="password" placeholder="Password"/>
-        <p></p>
+        <p th:if="${param.error}">
+            Email already in use.
+        </p>
         <button>Sign Up</button>
         <p>OR</p>
         <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/login}" href="#">
