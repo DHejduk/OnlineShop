@@ -1,4 +1,4 @@
-package com.onlineshop.project.service.impl;
+package com.onlineshop.project.service;
 
 import com.onlineshop.project.model.entity.Role;
 import com.onlineshop.project.model.entity.User;

@@ -1,4 +1,4 @@
-package com.onlineshop.project.service.impl;
+package com.onlineshop.project.service;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

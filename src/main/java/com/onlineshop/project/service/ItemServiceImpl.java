@@ -1,56 +1,76 @@
-package com.onlineshop.project.service.impl;
+package com.onlineshop.project.service;
 
+import com.onlineshop.project.model.dto.ItemDto;
 import com.onlineshop.project.model.entity.Item;
+import com.onlineshop.project.model.entity.User;
 import com.onlineshop.project.repository.ItemRepository;
-import com.onlineshop.project.service.ItemService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
 @Transactional
-@AllArgsConstructor
-public class ItemServiceImpl implements ItemService {
+@RequiredArgsConstructor
+public class ItemServiceImpl {
 
     @Autowired
     private final ItemRepository itemRepository;
 
+    public Item newItem(ItemDto itemDto,  User byEmail){
+        Item item = new Item();
+        item.setItemName(itemDto.getItemName());
+        item.setPrice(new BigDecimal(itemDto.getPrice()));
+        item.setDescription(itemDto.getDescription());
+        item.setImgUrl(itemDto.getImgUrl());
+        item.setUser(byEmail);
+        item.setStatus("OK");
 
-    @Override
+        return item;
+    }
+
     public void save(Item item) {
         itemRepository.save(item);
     }
 
-    @Override
+
     public Item findByItemId(Long id) {
         return itemRepository.findByItemId(id);
     }
 
-    @Override
+
     public Item findByItemName(String name) {
         return itemRepository.findByItemName(name);
     }
 
-    @Override
+
     public Item findLastAddedItem() {
         return itemRepository.findFirstByOrderByItemIdDesc();
     }
 
-    @Override
+
     public List<Item> findAllSellingItems() {
         return itemRepository.findAll();
     }
 
-    @Override
+
     public void deleteItem(Long id) {
         itemRepository.deleteById(id);
     }
 
-    @Override
-    public void updateItem(Item item) {
+
+    public void updateItem(String id, ItemDto itemDto, User byEmail) {
+        Item item = new Item();
+        item.setItemId(Long.valueOf(id));
+        item.setItemName(itemDto.getItemName());
+        item.setPrice(new BigDecimal(itemDto.getPrice()));
+        item.setDescription(itemDto.getDescription());
+        item.setUser(byEmail);
+        item.setStatus("OK");
+
         itemRepository.save(item);
     }
 
@@ -59,7 +79,7 @@ public class ItemServiceImpl implements ItemService {
         return itemRepository.findItemsByUserId(id, status);
     }
 
-    @Override
+
     public List<Item> findItemWhereUserIdNotIn(Long id, String status) {
         return itemRepository.findItemsNotContainingUserId(id, status);
     }
