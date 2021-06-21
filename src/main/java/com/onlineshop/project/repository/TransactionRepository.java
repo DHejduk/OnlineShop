@@ -13,6 +13,7 @@ import java.util.List;
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 
     List<Transaction> findAllByBuyer(User user);
+
     List<Transaction> findAllByVendor(User user);
 
 }
