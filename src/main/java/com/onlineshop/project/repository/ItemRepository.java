@@ -14,7 +14,9 @@ import java.util.List;
 public interface ItemRepository extends JpaRepository<Item,Long> {
 
     Item findByItemId(Long id);
+
     Item findByItemName(String name);
+
     Item findFirstByOrderByItemIdDesc();
 
     @Query("SELECT i FROM Item i where i.user.userId = ?1 and  i.status not like ?2")

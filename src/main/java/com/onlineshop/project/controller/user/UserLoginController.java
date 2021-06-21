@@ -1,8 +1,8 @@
 package com.onlineshop.project.controller.user;
 
 import com.onlineshop.project.model.dto.UserLoginDto;
-import com.onlineshop.project.service.impl.MyUserDetailsService;
-import com.onlineshop.project.service.impl.UserServiceImpl;
+import com.onlineshop.project.service.MyUserDetailsService;
+import com.onlineshop.project.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,9 +18,9 @@ public class UserLoginController {
 
     @Autowired
     private final UserServiceImpl userService;
+
     @Autowired
     private final MyUserDetailsService userDetailsService;
-
 
 
     @GetMapping("/login")
@@ -32,14 +32,14 @@ public class UserLoginController {
     @PostMapping("/login")
     public String processLogin(@ModelAttribute("userLogin") UserLoginDto userLoginDto) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(userLoginDto.getEmail());
+
         if (userDetails == null){
             return "redirect:/login?error";
         }
         if (!userService.passwordMatches(userLoginDto.getPassword(),userDetails.getPassword())) {
             return "redirect:/login?error";
         }
+
         return "redirect:/shop";
-
     }
-
 }

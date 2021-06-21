@@ -8,12 +8,15 @@ import javax.validation.constraints.NotNull;
 
 @Data
 public class UserRegistrationDto {
+
     @NotNull
     @NotEmpty
     private String username;
+
     @NotNull
     @NotEmpty @ValidEmail
     private String email;
+
     @NotNull
     @NotEmpty
     private String password;
