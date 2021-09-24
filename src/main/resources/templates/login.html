@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Sign in</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="container" id="container">
+    <form action="/login" method="post" modelAttribute="userLogin">
+        <h1>Sign In To Your Account</h1>
+        <input  id="email" name="email" type="email" placeholder="Email"/>
+        <input  id="password" name="password" th:type="password" placeholder="Password"/>
+        <p th:if="${param.error}">
+            Invalid username and password.
+        </p>
+        <p th:if="${param.logout}">
+            You have been logged out.
+        </p>
+        <button type="submit">Sign In</button>
+        <p> OR </p>
+        <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/sign-up}" href="#">
+            <button type="button">
+                SIGN UP
+            </button>
+        </a>
+    </form>
+
+</div>
+<script src="/js/script.js"></script>
+</body>
+</html>
